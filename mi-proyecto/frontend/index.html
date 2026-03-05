@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mercado — Mini-Tienda Profesional</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <a href="#" id="link-inicio">
+        <span class="brand-icon">◈</span>
+        <span class="brand-text">Mercado</span>
+      </a>
+    </div>
+
+    <ul class="nav-menu" id="menu-publico">
+      <li><a href="#" id="link-login" class="nav-link">Iniciar Sesión</a></li>
+      <li><a href="#" id="link-registro" class="btn btn-primary">Registrarse</a></li>
+    </ul>
+
+    <ul class="nav-menu" id="menu-privado">
+      <li><span id="user-saldo" class="badge-saldo">1.000 €</span></li>
+      <li><a href="#" id="link-vender" class="nav-link">Vender</a></li>
+      <li><a href="#" id="link-mis-cosas" class="nav-link">Mi Panel</a></li>
+      <li>
+        <button class="cart-btn" id="btn-carrito" aria-label="Abrir carrito">
+          🛒 Carrito
+          <span class="cart-count" id="cart-count">0</span>
+        </button>
+      </li>
+      <li><a href="#" id="link-logout" class="btn btn-outline">Salir</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===== CART DRAWER ===== -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <h3>🛒 Tu Carrito</h3>
+      <button class="close-cart" id="close-cart">✕</button>
+    </div>
+    <div class="cart-body" id="cart-body">
+      <div class="cart-empty" id="cart-empty">
+        <svg width="52" height="52" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m12-9l2 9M9 21h6"/></svg>
+        <p>Tu carrito está vacío</p>
+      </div>
+    </div>
+    <div class="cart-footer" id="cart-footer" style="display:none">
+      <div class="cart-total">
+        <span class="cart-total-label">Total estimado</span>
+        <span class="cart-total-amount" id="cart-total">0 €</span>
+      </div>
+      <button class="btn btn-primary btn-full" id="btn-checkout">Finalizar Compra →</button>
+    </div>
+  </div>
+
+  <!-- ===== MAIN ===== -->
+  <main class="container">
+
+    <!-- CATÁLOGO -->
+    <section id="vista-catalogo" class="view-section active">
+      <div class="hero">
+        <div class="hero-inner">
+          <span class="hero-eyebrow">✦ Marketplace exclusivo</span>
+          <h1>Descubre productos <em>increíbles</em></h1>
+          <p>Compra y vende al mejor precio en nuestra comunidad.</p>
+        </div>
+      </div>
+
+      <div class="catalog-toolbar">
+        <div class="search-wrap">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="11" cy="11" r="8" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke-width="2" stroke-linecap="round"/></svg>
+          <input type="text" class="search-input" id="buscador" placeholder="Buscar productos…">
+        </div>
+        <select class="sort-select" id="sort-select">
+          <option value="default">Ordenar por defecto</option>
+          <option value="price-asc">Precio: menor a mayor</option>
+          <option value="price-desc">Precio: mayor a menor</option>
+          <option value="name">Nombre A-Z</option>
+        </select>
+      </div>
+
+      <div class="product-grid" id="lista-productos"></div>
+    </section>
+
+    <!-- LOGIN -->
+    <section id="vista-login" class="view-section">
+      <div class="form-container">
+        <h2>Bienvenido de nuevo</h2>
+        <p class="subtitle">Inicia sesión en tu cuenta</p>
+        <form id="form-login" novalidate>
+          <div class="input-group">
+            <label for="login-email">Correo Electrónico</label>
+            <input type="email" id="login-email" placeholder="ejemplo@correo.com">
+            <span class="error-msg" id="err-login-email">Introduce un correo válido.</span>
+          </div>
+          <div class="input-group">
+            <label for="login-password">Contraseña</label>
+            <input type="password" id="login-password" placeholder="••••••••">
+            <span class="error-msg" id="err-login-pass">La contraseña no puede estar vacía.</span>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Entrar →</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- REGISTRO -->
+    <section id="vista-registro" class="view-section">
+      <div class="form-container">
+        <h2>Crea tu cuenta</h2>
+        <p class="subtitle">Únete para comprar y vender</p>
+        <form id="form-registro" novalidate>
+          <div class="input-group">
+            <label for="reg-email">Correo Electrónico</label>
+            <input type="email" id="reg-email" placeholder="ejemplo@correo.com">
+            <span class="error-msg" id="err-reg-email">Introduce un correo válido.</span>
+          </div>
+          <div class="input-group">
+            <label for="reg-password">Contraseña</label>
+            <input type="password" id="reg-password" placeholder="Mínimo 6 caracteres">
+            <span class="error-msg" id="err-reg-pass">Mínimo 6 caracteres.</span>
+          </div>
+          <div class="input-group">
+            <label for="reg-password-conf">Confirmar Contraseña</label>
+            <input type="password" id="reg-password-conf" placeholder="Repite tu contraseña">
+            <span class="error-msg" id="err-reg-conf">Las contraseñas no coinciden.</span>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Crear Cuenta →</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- VENDER -->
+    <section id="vista-vender" class="view-section">
+      <div class="form-container form-container-large">
+        <h2>Publicar Producto</h2>
+        <p class="subtitle">Gana dinero vendiendo lo que no usas</p>
+        <form id="form-vender" novalidate>
+          <div class="input-group">
+            <label for="prod-nombre">Nombre del producto</label>
+            <input type="text" id="prod-nombre" placeholder="Ej: Teclado Mecánico RGB">
+            <span class="error-msg" id="err-prod-nombre">El nombre es obligatorio.</span>
+          </div>
+          <div class="input-group">
+            <label for="prod-descripcion">Descripción</label>
+            <textarea id="prod-descripcion" rows="4" placeholder="Describe el producto en detalle…"></textarea>
+            <span class="error-msg" id="err-prod-desc">La descripción es obligatoria.</span>
+          </div>
+          <div class="grid-2-cols">
+            <div class="input-group">
+              <label for="prod-precio">Precio (€)</label>
+              <input type="number" id="prod-precio" min="0.01" step="0.01" placeholder="0.00">
+              <span class="error-msg" id="err-prod-precio">Introduce un precio válido.</span>
+            </div>
+            <div class="input-group">
+              <label for="prod-imagen">URL de imagen (opcional)</label>
+              <input type="url" id="prod-imagen" placeholder="https://...">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Publicar Ahora →</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- MI PANEL -->
+    <section id="vista-mis-cosas" class="view-section">
+      <div class="dashboard-header">
+        <h2>Mi Panel de Control</h2>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-saldo">1.000€</div>
+          <div class="stat-label">Saldo disponible</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-compras">0</div>
+          <div class="stat-label">Compras realizadas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-ventas">0</div>
+          <div class="stat-label">Productos publicados</div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="dashboard-card">
+          <h3>🛍️ Mis Compras</h3>
+          <div id="lista-mis-compras" class="list-group">
+            <div class="list-empty">Aún no has realizado compras.</div>
+          </div>
+        </div>
+        <div class="dashboard-card">
+          <h3>📦 Mis Productos en Venta</h3>
+          <div id="lista-mis-productos" class="list-group">
+            <div class="list-empty">Aún no tienes productos publicados.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL EDITAR PRODUCTO -->
+  <div class="modal-overlay" id="modal-overlay"></div>
+  <div class="modal" id="modal-editar">
+    <div class="modal-header">
+      <h3>Editar Producto</h3>
+      <button class="close-modal" id="close-modal">2715</button>
+    </div>
+    <form id="form-editar" novalidate>
+      <input type="hidden" id="edit-id">
+      <div class="input-group">
+        <label for="edit-nombre">Nombre</label>
+        <input type="text" id="edit-nombre">
+        <span class="error-msg" id="err-edit-nombre">El nombre es obligatorio.</span>
+      </div>
+      <div class="input-group">
+        <label for="edit-descripcion">Descripci00f3n</label>
+        <textarea id="edit-descripcion" rows="3"></textarea>
+        <span class="error-msg" id="err-edit-desc">La descripci00f3n es obligatoria.</span>
+      </div>
+      <div class="grid-2-cols">
+        <div class="input-group">
+          <label for="edit-precio">Precio (20ac)</label>
+          <input type="number" id="edit-precio" min="0.01" step="0.01">
+          <span class="error-msg" id="err-edit-precio">Introduce un precio v00e1lido.</span>
+        </div>
+        <div class="input-group">
+          <label for="edit-imagen">URL de imagen</label>
+          <input type="url" id="edit-imagen" placeholder="https://...">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-full">Guardar Cambios 2192</button>
+    </form>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="script.js"></script>
+</body>
+</html> 
